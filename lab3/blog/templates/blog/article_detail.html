@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<section class="fade-in container py-5">
+  <h1 class="display-5 text-light">{{ article.title }}</h1>
+  <p class="text-muted">{{ article.date }}</p>
+  <hr class="border-secondary">
+  <p class="lead">{{ article.description }}</p>
+
+  <div class="row mt-5">
+    {% for img in article.images.all %}
+    <div class="col-md-4 mb-4 animate-zoom">
+      <img src="{{ img.image.url }}" class="img-fluid rounded shadow" alt="{{ img.caption }}">
+      {% if img.caption %}
+      <p class="text-secondary mt-2">{{ img.caption }}</p>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

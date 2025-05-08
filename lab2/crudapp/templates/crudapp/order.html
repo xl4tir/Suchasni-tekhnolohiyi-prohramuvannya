@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  <title>{% if form.instance.pk %}Редагувати замовлення{% else %}Нове замовлення{% endif %}</title>
+{% endblock %}
+
+{% block content %}
+<div class="py-4">
+  <div class="mb-4">
+    <h2 class="mb-3">
+      {% if form.instance.pk %}
+        ✏️ Редагування замовлення #{{ form.instance.oid }}
+      {% else %}
+        ➕ Створення нового замовлення
+      {% endif %}
+    </h2>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="mb-3">
+            <label for="{{ field.id_for_label }}" class="form-label fw-semibold">
+              {{ field.label }}
+            </label>
+            {{ field }}
+            {% if field.errors %}
+              <div class="text-danger small">
+                {{ field.errors|striptags }}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+        <div class="d-flex justify-content-between align-items-center mt-4">
+          <a href="{% url 'show_url' %}" class="btn btn-secondary">Назад</a>
+          <button type="submit" class="btn btn-primary">
+            {% if form.instance.pk %}Зберегти зміни{% else %}Створити замовлення{% endif %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

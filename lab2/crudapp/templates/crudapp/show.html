@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  <title>Список замовлень</title>
+{% endblock %}
+
+{% block content %}
+<div class="py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">📋 Список замовлень</h2>
+    <a href="{% url 'order_url' %}" class="btn btn-success">+ Додати замовлення</a>
+  </div>
+
+  {% if obj %}
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered align-middle shadow-sm">
+      <thead class="table-dark text-center">
+        <tr>
+          <th>ID</th>
+          <th>Ім’я</th>
+          <th>Прізвище</th>
+          <th>Сума (₴)</th>
+          <th>Email</th>
+          <th>Адреса</th>
+          <th>Дії</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in obj %}
+        <tr>
+          <td class="text-center">{{ i.oid }}</td>
+          <td>{{ i.fname }}</td>
+          <td>{{ i.lname }}</td>
+          <td class="text-end">{{ i.price }}</td>
+          <td>{{ i.mail }}</td>
+          <td>{{ i.addr }}</td>
+          <td class="text-center">
+            <div class="btn-group" role="group">
+              <a href="{% url 'update_url' i.oid %}" class="btn btn-sm btn-outline-primary">Редагувати</a>
+              <a href="{% url 'delete_url' i.oid %}" class="btn btn-sm btn-outline-danger">Видалити</a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <div class="alert alert-info text-center" role="alert">
+      Наразі замовлень немає. Додайте перше!
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
