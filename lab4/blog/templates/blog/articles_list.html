@@ -1,0 +1,39 @@
+{% extends 'blog/base.html' %}
+{% block title %}Статті — FutureBlog{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">📰 Усі статті</h1>
+
+<div class="row">
+  {% for article in articles %}
+  <div class="col-md-4 mb-4">
+    <div class="card text-dark h-100 shadow-sm">
+      {% if article.images.first %}
+      <img src="{{ article.images.first.image.url }}" class="card-img-top" alt="{{ article.title }}">
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{ article.title }}</h5>
+        <p class="card-text">{{ article.description|truncatewords:20 }}</p>
+        <a href="{{ article.get_absolute_url }}" class="btn btn-outline-primary">Детальніше</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="mt-4 d-flex justify-content-center">
+  {% if is_paginated %}
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">← Назад</a></li>
+      {% endif %}
+
+      <li class="page-item active"><span class="page-link">{{ page_obj.number }}</span></li>
+
+      {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Вперед →</a></li>
+      {% endif %}
+    </ul>
+  {% endif %}
+</div>
+{% endblock %}

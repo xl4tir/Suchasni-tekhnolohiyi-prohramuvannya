@@ -1,0 +1,25 @@
+{% extends 'blog/base.html' %}
+{% block title %}{{ category.name }} — Категорія — FutureBlog{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">📂 Категорія: {{ category.name }}</h2>
+
+<div class="row">
+  {% for article in articles %}
+  <div class="col-md-4 mb-4">
+    <div class="card text-dark h-100 shadow-sm">
+      {% if article.images.first %}
+      <img src="{{ article.images.first.image.url }}" class="card-img-top" alt="{{ article.title }}">
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{ article.title }}</h5>
+        <p class="card-text">{{ article.description|truncatewords:20 }}</p>
+        <a href="{{ article.get_absolute_url }}" class="btn btn-outline-primary">Читати</a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+    <p>У цій категорії поки немає статей.</p>
+  {% endfor %}
+</div>
+{% endblock %}

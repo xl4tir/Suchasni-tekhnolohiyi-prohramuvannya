@@ -1,0 +1,38 @@
+{% extends 'blog/base.html' %}
+{% block title %}{{ article.title }} — FutureBlog{% endblock %}
+
+{% block content %}
+<article class="fade-in">
+  <h1>{{ article.title }}</h1>
+  <p style="color: #ccc;">{{ article.date }}</p>
+  <hr class="border-secondary">
+
+  {% if article.images.all %}
+  <div class="carousel-container mx-auto mb-4">
+    <div id="carouselArticleImages" class="carousel slide carousel-fade" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        {% for img in article.images.all %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ img.caption }}">
+          {% if img.caption %}
+          <div class="carousel-caption d-none d-md-block">
+            <p class="text-shadow-black">{{ img.caption }}</p>
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselArticleImages" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselArticleImages" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  
+  {% endif %}
+
+  <p class="lead">{{ article.description }}</p>
+</article>
+{% endblock %}
